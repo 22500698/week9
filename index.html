@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        main {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+
+            border-radius: 20px;
+            background-color: blue;
+            padding: 10px 20px;
+            color: aliceblue;
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        const API_URL = "https://6ae2ab3dbbb54129229a387c.mockapi.io/products";
+
+        window.addEventListener("load", () => {
+            loadProducts();
+        })
+
+        async function loadProducts() {
+            const response = await fetch(API_URL);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            const products = await response.json();
+            renderProducts(products);
+        }
+
+        function renderProducts(products) {
+            const list = document.getElementById("studentList");
+            list.replaceChildren();
+
+            products.forEach(product => {
+                const li = document.createElement("li");
+                const editBtn = document.createElement("button");
+                const removeBtn = document.createElement("button");
+
+                li.textContent = `${product.name} (${product.price}) | ${product.category} | ${product.date} | ${product.description} |`;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <main>
+        <a href="crud.html">+ 새로 만들기</a>
+        <ul id="studentList"></ul>
+    </main>
+</body>
+
+</html>
