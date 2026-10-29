@@ -68,6 +68,19 @@
             await loadProducts();
         }
 
+        async function deleteProduct(id) {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "DELETE"
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            await loadProducts();
+        }
+
+
         async function loadProducts() {
             const response = await fetch(API_URL);
 
@@ -85,8 +98,15 @@
             list.replaceChildren();
             products.forEach(product => {
                 const li = document.createElement("li");
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = 'X';
                 li.textContent = `${product.name} (${product.price}) | ${product.category} | ${product.date} | ${product.description} |`;
                 list.appendChild(li);
+                li.appendChild(removeBtn);
+
+                removeBtn.addEventListener("click", () => {
+                    deleteProduct(product.id - 1);
+                })
             });
         }
     </script>
