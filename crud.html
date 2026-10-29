@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const API_URL = "https://6ae2ab3dbbb54129229a387c.mockapi.io/products";
+        let realProducts = [];
+        window.addEventListener("load", () => {
+            loadProducts();
+        })
+
+        async function loadProducts() {
+            const response = await fetch(API_URL);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            realProducts = await response.json();
+            renderProducts(realProducts);
+        }
+
+        function renderProducts(products) {
+            const list = document.getElementById("productList");
+
+            list.replaceChildren();
+            products.forEach(product => {
+                const li = document.createElement("li");
+                li.textContent = `${product.name} (${product.price}) | ${product.category} | ${product.date} | ${product.description} |`;
+                list.appendChild(li);
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <label>상품명</label>
+        <input required id="name" type="text" /><br>
+        <label>설명</label>
+        <input required id="description" type="text" /><br>
+        <label>카테고리</label>
+        <input required id="category" type="text" /><br>
+        <label>생산날짜</label>
+        <input required id="date" type="date" /><br>
+        <label>가격</label>
+        <input required id="price" type="number" /><br>
+
+        <button id="addBtn" type="submit">추가하기</button>
+    </form>
+
+    <ul id="productList"></ul>
+</body>
+
+</html>
