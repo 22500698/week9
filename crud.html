@@ -42,7 +42,6 @@
 
                 renderProducts(products);
             })
-            // 20250701 -> 20250700 + 07*100
 
             addBtn.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -154,18 +153,18 @@
                 li.appendChild(removeBtn);
 
                 editBtn.addEventListener("click", () => {
-                    document.querySelector("#name").value = products[product.id - 1].name;
-                    document.querySelector("#description").value = products[product.id - 1].description;
-                    document.querySelector("#category").value = products[product.id - 1].category;
-                    document.querySelector("#date").value = products[product.id - 1].date;
-                    document.querySelector("#price").value = products[product.id - 1].price;
+                    document.querySelector("#name").value = product.name;
+                    document.querySelector("#description").value = product.description;
+                    document.querySelector("#category").value = product.category;
+                    document.querySelector("#date").value = product.date;
+                    document.querySelector("#price").value = product.price;
 
-                    check = product.id - 1;
-                    num = product.id - 1;
+                    check = 1;
+                    num = product.id;
                 })
 
                 removeBtn.addEventListener("click", () => {
-                    deleteProduct(product.id - 1);
+                    deleteProduct(product.id);
                 })
             });
         }
