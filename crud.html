@@ -46,19 +46,19 @@
 
             addBtn.addEventListener("click", (e) => {
                 e.preventDefault();
-                if (!name.checkVisibility()) {
+                if (!name.checkValidity()) {
                     alert("제품명을 제대로 적으시오")
                     name.focus();
                     return;
                 }
 
-                if (!description.checkVisibility()) {
+                if (!description.checkValidity()) {
                     alert("제품 설명을 제대로 적으시오")
                     description.focus();
                     return;
                 }
 
-                if (!price.checkVisibility()) {
+                if (!price.checkValidity()) {
                     alert("가격을 제대로 적으시오")
                     price.focus();
                     return;
