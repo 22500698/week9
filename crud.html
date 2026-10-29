@@ -98,11 +98,22 @@
             list.replaceChildren();
             products.forEach(product => {
                 const li = document.createElement("li");
+                const editBtn = document.createElement("button");
                 const removeBtn = document.createElement("button");
+                editBtn.textContent = "edit";
                 removeBtn.textContent = 'X';
                 li.textContent = `${product.name} (${product.price}) | ${product.category} | ${product.date} | ${product.description} |`;
                 list.appendChild(li);
+                li.appendChild(editBtn);
                 li.appendChild(removeBtn);
+
+                editBtn.addEventListener("click", () => {
+                    document.querySelector("#name").value = products[product.id - 1].name;
+                    document.querySelector("#description").value = products[product.id - 1].description;
+                    document.querySelector("#category").value = products[product.id - 1].category;
+                    document.querySelector("#date").value = products[product.id - 1].date;
+                    document.querySelector("#price").value = products[product.id - 1].price;
+                })
 
                 removeBtn.addEventListener("click", () => {
                     deleteProduct(product.id - 1);
