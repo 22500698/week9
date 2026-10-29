@@ -8,6 +8,8 @@
     <script>
         const API_URL = "https://6ae2ab3dbbb54129229a387c.mockapi.io/products";
         let realProducts = [];
+        let check = 0;
+        let num = 0;
         window.addEventListener("load", () => {
             loadProducts();
 
@@ -49,7 +51,13 @@
                     price: price.value,
                 }
 
-                addProduct(newProduct);
+
+                if (check == 0) {
+                    addProduct(newProduct);
+                } else {
+                    updateProduct(num, newProduct);
+                    check = 0;
+                }
             })
         })
 
@@ -61,6 +69,22 @@
                 },
                 body: JSON.stringify(products)
             });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            await loadProducts();
+        }
+
+        async function updateProduct(id, updatedData) {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedData)
+            });
+
             if (!response.ok) {
                 throw new Error(`HTTP ${response.status}`);
             }
@@ -113,6 +137,9 @@
                     document.querySelector("#category").value = products[product.id - 1].category;
                     document.querySelector("#date").value = products[product.id - 1].date;
                     document.querySelector("#price").value = products[product.id - 1].price;
+
+                    check = product.id - 1;
+                    num = product.id - 1;
                 })
 
                 removeBtn.addEventListener("click", () => {
