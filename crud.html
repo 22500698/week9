@@ -10,7 +10,45 @@
         let realProducts = [];
         window.addEventListener("load", () => {
             loadProducts();
+
+            const name = document.querySelector("#name")
+            const description = document.querySelector("#description")
+            const date = document.querySelector("#date")
+            const price = document.querySelector("#price")
+            const category = document.querySelector("#category")
+
+
+            const addBtn = document.getElementById("addBtn");
+
+            addBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                const newProduct = {
+                    name: name.value,
+                    description: description.value,
+                    category: category.value,
+                    date: date.value,
+                    price: price.value,
+                }
+
+                addProduct(newProduct);
+            })
         })
+
+        async function addProduct(products) {
+            const response = await fetch(API_URL, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(products)
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+
+            await loadProducts();
+        }
 
         async function loadProducts() {
             const response = await fetch(API_URL);
