@@ -32,12 +32,8 @@
                 const productList = document.querySelector("#productList");
                 productList.innerHTML = "";
 
-                const startYear = Number(dateSmall.value);
-                const endYear = Number(dateBig.value);
-
                 const products = realProducts.filter(p => {
-                    const year = Number(p.date.substring(0, 4));
-                    return year >= startYear && year <= endYear;
+                    return p.date >= dateSmall.value && p.date <= dateBig.value
                 });
 
                 renderProducts(products);
